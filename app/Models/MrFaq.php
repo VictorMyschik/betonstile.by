@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Myschik\ORM\ORM;
 
-class MrFaq extends Model
+class MrFaq extends ORM
 {
   protected $table = 'mr_faq';
   protected $fillable = [

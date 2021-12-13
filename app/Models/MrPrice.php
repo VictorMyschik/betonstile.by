@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Myschik\ORM\ORM;
 
-class MrPrice extends Model
+class MrPrice extends ORM
 {
   protected $table = 'mr_price';
   protected $fillable = [
@@ -13,7 +13,7 @@ class MrPrice extends Model
     'Value',
     'Kind',
     'IsVisible',
-    'WriteDate'
+    //'WriteDate'
   ];
 
   const ZABOR = 1;
@@ -30,12 +30,12 @@ class MrPrice extends Model
 
   public function getValue(): string
   {
-    return $this->value;
+    return $this->Value;
   }
 
   public function setValue(string $value)
   {
-    return $this->value = $value;
+    return $this->Value = $value;
   }
 
   public function isVisible(): bool
@@ -51,9 +51,9 @@ class MrPrice extends Model
   /**
    * @return MrPrice[]
    */
-  public static function GetZaborList(): array
+  public static function getZaborList(): array
   {
-    $list = DB::table(static::$mr_table)->where('kind', self::ZABOR)->get(['id'])->toArray();
+    $list = DB::table(self::getTableName())->where('Kind', self::ZABOR)->get(['id'])->toArray();
     $list_out = array();
     foreach($list as $row) {
       $list_out[] = MrPrice::loadBy($row->id);
