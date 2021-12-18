@@ -2,50 +2,69 @@
 
 namespace App\Models;
 
+use App\Models\Lego\Traits\Fields\MrDescriptionNullableFieldTrait;
+use App\Models\Lego\Traits\Fields\MrIsActiveFieldTrait;
+use App\Models\Lego\Traits\Fields\MrKindFieldTrait;
+use App\Models\Lego\Traits\Fields\MrOrmDateTimeNullableFieldTrait;
+use App\Models\Lego\Traits\Fields\MrWriteDateFieldTrait;
 use Illuminate\Support\Facades\DB;
+use JetBrains\PhpStorm\ArrayShape;
 use Myschik\ORM\ORM;
 
 class MrPrice extends ORM
 {
+  use MrWriteDateFieldTrait;
+  use MrOrmDateTimeNullableFieldTrait;
+  use MrIsActiveFieldTrait;
+  use MrDescriptionNullableFieldTrait;
+  use MrKindFieldTrait;
+
   protected $table = 'mr_price';
   protected $fillable = [
     'Name',
     'Value',
     'Kind',
-    'IsVisible',
+    'IsActive',
+    'Description'
     //'WriteDate'
   ];
 
   const ZABOR = 1;
+
+  #[ArrayShape([self::ZABOR => "string"])]
+  public static function getKindList(): array
+  {
+    return [self::ZABOR => 'Заборы'];
+  }
 
   public function getName(): string
   {
     return $this->Name;
   }
 
-  public function setName(string $value)
+  public function setName(string $value): void
   {
-    return $this->Name = $value;
+    $this->Name = $value;
   }
 
-  public function getValue(): string
+  public function getValue(): ?string
   {
     return $this->Value;
   }
 
-  public function setValue(string $value)
+  public function setValue(?string $value): void
   {
-    return $this->Value = $value;
+    $this->Value = $value;
   }
 
-  public function isVisible(): bool
+  public function isActive(): bool
   {
-    return $this->IsVisible;
+    return $this->IsActive;
   }
 
-  public function setIsVisible(bool $value)
+  public function setIsActive(bool $value): void
   {
-    return $this->IsVisible = $value;
+    $this->IsActive = $value;
   }
 
   /**
@@ -54,11 +73,11 @@ class MrPrice extends ORM
   public static function getZaborList(): array
   {
     $list = DB::table(self::getTableName())->where('Kind', self::ZABOR)->get(['id'])->toArray();
-    $list_out = array();
+    $listOut = array();
     foreach($list as $row) {
-      $list_out[] = MrPrice::loadBy($row->id);
+      $listOut[] = MrPrice::loadBy($row->id);
     }
 
-    return $list_out;
+    return $listOut;
   }
 }

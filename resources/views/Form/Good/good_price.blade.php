@@ -1,0 +1,1 @@
+<mr-good-details-price :good="{{json_encode($good)}}" is_active="{{$is_active ?? true}}"></mr-good-details-price>

@@ -229,7 +229,10 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'MrBtn'        => App\Forms\FormBase\MrForm::class,
+        'MrMessage'    => App\Helpers\System\MrMessageHelper::class,
+        'MrBaseHelper' => App\Helpers\System\MrBaseHelper::class,
+        'MrLink'       => App\Helpers\System\MrLink::class,
     ],
 
 ];

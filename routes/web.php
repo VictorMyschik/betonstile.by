@@ -1,9 +1,11 @@
 <?php
 
+use App\Forms\MrPriceEditForm;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\MrBaseController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -40,3 +42,25 @@ Route::get('/catalog/vorota', [CatalogController::class, 'vorotaPage'])->name('v
 Route::get('/catalog/trotuar', [CatalogController::class, 'trotuarPage'])->name('trotuar_page');
 Route::get('/catalog/oblicovka', [CatalogController::class, 'oblicovkaPage'])->name('oblicovka_page');
 Route::get('/catalog/forms', [CatalogController::class, 'formsPage'])->name('forms_page');
+
+// Admin
+Route::group(['middleware' => ['auth']], function() {
+  Route::match(['get', 'post'], '/admin/zabor', [AdminController::class, 'zaborPage'])->name('admin_zabor_page');
+  Route::match(['get', 'post'], '/admin/blok', [AdminController::class, 'blokPage'])->name('admin_blok_page');
+
+  Route::match(['get', 'post'], '/admin/new/{price_id}/kind/{kind}/submit', [MrPriceEditForm::class, 'submitForm'])->name('admin_price_form_submit');
+  Route::match(['get', 'post'], '/admin/new/{price_id}/kind/{kind}/edit', [MrPriceEditForm::class, 'getFormBuilder'])->name('admin_price_form_edit');
+
+  // delete price
+  Route::get('/admin/{price_id}/delete', [AdminController::class, 'deleteById'])->name('admin_delete_by_id');
+
+  // Очистка кеша
+  Route::get('/clear', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    //composer dump-autoload --optimize
+    return back();
+  })->name('clear');
+});
+

@@ -16,11 +16,16 @@
               <p> {{ $message }} </p>
             </div>
             <div class="panel-body">
-              @foreach($price as $item)
-                @if ($item->isVisible())
-                  <li> {{ $item->getName() .' - '. $item->getValue() }}</li>
-                @endif
-              @endforeach
+              <table class="table table-sm table-hover">
+                @foreach($price as $item)
+                  <tr class="margin-top-5">
+                    <td>
+                      <div> {{ $item->getName() .' - '. $item->getValue() }}</div>
+                      <div class="mr-description">{{$item->getDescription()}}</div>
+                    </td>
+                  </tr>
+                @endforeach
+              </table>
             </div>
           </div>
         </div>

@@ -41,7 +41,7 @@ class CatalogController extends Controller
       'files'       => $newList,
       'files_stolb' => $newListStolb,
       'message'     => $messageOut,
-      'price'       => MrPrice::where('Kind', MrPrice::ZABOR)->get(),
+      'price'       => MrPrice::where('Kind', MrPrice::ZABOR)->where('IsActive', true)->get(),
     );
 
     return View('catalog.catalog_zabor')->with($out);

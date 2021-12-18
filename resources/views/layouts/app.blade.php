@@ -123,6 +123,7 @@
                     <h3 class="class margin-bottom-10">Информация</h3>
                     <p>По всем вопросам звоните или пишите, мы обязательно ответим.</p>
                     <p>Следите за скидками и акциями на нашем сайте.</p>
+                    <p><a href="{{route('login')}}">Вход</a></p>
                 </div>
                 <div class="col-md-4 margin-bottom-20">
                     <h3 class="margin-bottom-10">Наши контакты</h3>
